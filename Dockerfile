@@ -18,4 +18,5 @@ COPY . .
 EXPOSE 5000
 
 # Run the Flask application when the container starts
-CMD ["python", "app.py"]
+# CMD ["python", "app.py"]
+CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000"]
