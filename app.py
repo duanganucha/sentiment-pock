@@ -11,7 +11,7 @@ CORS(app)
 
 model_url = "https://firebasestorage.googleapis.com/v0/b/test-e33fb.appspot.com/o/model-sentiment%2Fexport_model.pkl?alt=media&token=3231478c-8075-48d4-9cfa-3668a04127c3"
 model_path = 'export_model.pkl'
-if not os.path.exists(model_path):
+if not os.path.exists(model_url):
     print("Downloading model...")
     response = requests.get(model_url)
     with open(model_path, 'wb') as f:
