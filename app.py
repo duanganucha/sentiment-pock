@@ -38,15 +38,15 @@ def predict():
 
 #  For Build Docker AND Run ปกติ
 # gunicorn --bind 0.0.0.0 wsgi:app       
-if __name__ == '__main__':
-       app.run(debug=False, host='0.0.0.0' , port=6000 )
+# if __name__ == '__main__':
+#        app.run(debug=False, host='0.0.0.0' , port=6000 )
 
 
 
 
 # For Heroku 
-# if __name__ == '__main__':
-#     port = int(os.environ.get('PORT' , '5000' ))
-#     app.run(debug=False, host='0.0.0.0' , port=port )
+if __name__ == '__main__':
+    port = int(os.environ.get('PORT' , '5000' ))
+    app.run(debug=False, host='0.0.0.0' , port=port )
 
 
