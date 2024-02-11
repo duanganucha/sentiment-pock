@@ -10,6 +10,7 @@ COPY requirements.txt .
 # Install any needed packages specified in requirements.txt
 # ระบุ Python version ก่อนติดตั้ง requirements
 RUN pip install  -r requirements.txt
+RUN pip install gunicorn
 
 # Copy the entire application directory into the container
 COPY . .
