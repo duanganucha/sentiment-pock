@@ -16,8 +16,10 @@ RUN pip install gunicorn
 COPY . .
 
 # Expose port 5000 for the Flask application
-EXPOSE 5000
+EXPOSE 8000
 
 # Run the Flask application when the container starts
 # CMD ["python", "app.py"]
-CMD ["gunicorn", "app:app", "-b", "0.0.0.0:5000"]
+# CMD ["gunicorn", "app:app", "-b", "0.0.0.0:8000"]
+CMD ["gunicorn","--workers", "3", "--timeout", "1000", "--bind", "0.0.0.0:8000", "wsgi:app"]
+
