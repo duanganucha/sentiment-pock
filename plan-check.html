@@ -3,17 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Plan SSKH 1.0</title>
+    <title>Plan SSKH 2.0</title>
     <!-- Linking Tailwind CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
   </head>
-  <body class="  bg-gray-100">
-    <div class="  mx-auto py-8">
+  <body class="bg-gray-100">
+    <div class="container mx-auto">
       <!-- Form for input -->
-      <form id="fetchForm" class="mt-8 container">
+      <form
+        id="fetchForm"
+        class="p-8 text-center"
+        style="background-color: turquoise"
+      >
         <label for="noInput" class="block mb-2"
           >กรอกเลขหนังสือออกของหน่วยงาน :
         </label>
@@ -27,25 +35,28 @@
         />
         <input
           type="submit"
-          value="แสดงรายการ"
-          class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md cursor-pointer"
+          value="แสดงข้อมูล"
+          class="mt-4 bg-blue-800 text-white px-4 py-2 rounded-md cursor-pointer"
         />
       </form>
 
-      <h2 class="text-2xl font-bold mb-4">แสดงรายละเอียด</h2>
+      <h2 class="text-2xl font-bold p-2 ml-6">รายการแสดง</h2>
 
-      <div id="dataContainer" class="bg-white p-6 rounded-lg shadow-md">
+      <div id="dataContainer" class="bg-white m-4 p-3 rounded-lg shadow-md">
         <!-- Data will be displayed here -->
       </div>
 
-      <div id="loading" class="hidden justify-center items-center mt-4">
+      <div id="loading" class="hidden p-10 m-10">
         <div
           class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900"
         ></div>
+        <br />
         <span class="ml-2">กำลังโหลดข้อมูล...</span>
       </div>
 
-      <div id="noDataMessage" class="hidden mt-4 text-red-500">ไม่พบข้อมูล</div>
+      <div id="noDataMessage" class="hidden p-10 m-4 text-red-500">
+        ไม่พบข้อมูล
+      </div>
     </div>
 
     <!-- Script to handle the fetch request -->
@@ -95,10 +106,11 @@
         var dataContainer = document.getElementById("dataContainer");
 
         // Loop through each object in the data array
+        // Loop through each object in the data array
         data.forEach((item) => {
           // Create a div element for each item
           var itemDiv = document.createElement("div");
-          itemDiv.className = "mb-4";
+          itemDiv.className = "  card";
 
           // Iterate over the properties of each item
           for (var key in item) {
@@ -107,7 +119,15 @@
               // Create a paragraph element to display key-value pairs
               var p = document.createElement("p");
               p.className = "mb-1";
-              p.innerHTML = `<span class="font-bold">${key}:</span> ${item[key]}`;
+
+              // Add icon before the text
+              var icon = document.createElement("i");
+              icon.className = " fas fa-play mr-4  text-red-500"; // Change the class to the appropriate FontAwesome icon class
+              p.appendChild(icon);
+
+              p.innerHTML += `<span class="font-bold" style="color:cadetblue;">${key}:</span> ${item[key]}`;
+              p.innerHTML += `<hr>`;
+
               itemDiv.appendChild(p);
             }
           }
