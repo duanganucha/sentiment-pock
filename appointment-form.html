@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>แบบฟอร์มนัดหมายผู้ป่วย</title>
+    <title>แบบฟอร์มนัดหมายผู้ป่วย 1.0</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -107,10 +107,26 @@
             const formData = new FormData(this);
             const appointmentData = Object.fromEntries(formData.entries());
 
-            // ในที่นี้เราจะแสดงข้อมูลที่ส่งมาแทนการส่งไปยัง Google Apps Script
-            console.log('Appointment Data:', appointmentData);
-            showAlert('success', 'ข้อมูลถูกส่งเรียบร้อยแล้ว (ทดสอบ)');
-            $('#appointmentForm')[0].reset();
+            fetch('https://script.google.com/macros/s/AKfycbyo2uRAFUk6Jwq8W5d-4oycYLZb44NMcQovbRH92JfluWeDHBQDQxN9M-M_feK4ID2h/exec', {
+                method: 'POST',
+                mode: 'no-cors', // เพิ่มโหมด no-cors เพื่อหลีกเลี่ยงปัญหา CORS
+                body: JSON.stringify(appointmentData),
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    showAlert('success', 'ข้อมูลถูกส่งเรียบร้อยแล้ว');
+                    $('#appointmentForm')[0].reset();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showAlert('error', 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+            });
         });
     </script>
 </body>
