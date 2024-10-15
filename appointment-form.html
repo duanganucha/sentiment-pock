@@ -10,12 +10,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body class="bg-gray-100 min-h-screen w-full flex items-center justify-center overflow-auto">
+<body class="bg-gray-100 min-h-screen w-full flex items-center justify-center overflow-auto p-4">
 
     <div class="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow-lg mx-auto">
-
         <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
-            แบบฟอร์มนัดหมายผู้ป่วย 1.0
+            แบบฟอร์มนัดหมายผู้ป่วย
         </h2>
 
         <form id="appointmentForm" class="space-y-6">
@@ -109,24 +108,29 @@
 
             fetch('https://script.google.com/macros/s/AKfycbyo2uRAFUk6Jwq8W5d-4oycYLZb44NMcQovbRH92JfluWeDHBQDQxN9M-M_feK4ID2h/exec', {
                 method: 'POST',
-                mode: 'no-cors', // เพิ่มโหมด no-cors เพื่อหลีกเลี่ยงปัญหา CORS
-                body: JSON.stringify(appointmentData),
+                mode: 'no-cors',
+                body: JSON.stringify({
+                    action: 'processForm',
+                    formData: new URLSearchParams(formData).toString()
+                }),
                 headers: {
                     'Content-Type': 'application/json',
                 }
             })
-            .then(response => {
-                if (response.ok) {
-                    showAlert('success', 'ข้อมูลถูกส่งเรียบร้อยแล้ว');
-                    $('#appointmentForm')[0].reset();
-                } else {
-                    throw new Error('Network response was not ok.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                showAlert('error', 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
-            });
+                .then(response => {
+                    if (response.type === 'opaque') {
+                        // เนื่องจาก no-cors mode ทำให้เราไม่สามารถอ่านการตอบกลับได้
+                        // เราจะถือว่าการส่งข้อมูลสำเร็จ
+                        showAlert('success', 'ข้อมูลถูกส่งเรียบร้อยแล้ว');
+                        $('#appointmentForm')[0].reset();
+                    } else {
+                        throw new Error('Network response was not ok.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showAlert('error', 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+                });
         });
     </script>
 </body>
