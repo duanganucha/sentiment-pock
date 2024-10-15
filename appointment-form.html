@@ -8,62 +8,75 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
 
-<body class="bg-gray-100 min-h-screen w-full flex items-center justify-center overflow-auto p-4">
+<body
+    class="bg-gradient-to-r from-blue-100 to-green-100 min-h-screen w-full flex items-center justify-center overflow-auto p-4">
 
-    <div class="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow-lg mx-auto">
-        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
-            แบบฟอร์มนัดหมายผู้ป่วย
+    <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl mx-auto">
+        <h2 class="text-3xl font-bold text-center text-primary mb-8">
+            📅 แบบฟอร์มนัดหมายผู้ป่วย
         </h2>
 
         <form id="appointmentForm" class="space-y-6">
             <div>
-                <label for="name" class="block text-gray-700 font-semibold">ชื่อ-นามสกุล:</label>
+                <label for="name" class="block text-gray-700 font-semibold">👤 ชื่อ-นามสกุล:</label>
                 <input type="text" id="name" name="name" required
-                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
 
             <div>
-                <label for="idCard" class="block text-gray-700 font-semibold">เลขบัตรประชาชน:</label>
+                <label for="idCard" class="block text-gray-700 font-semibold">🆔 เลขบัตรประชาชน:</label>
                 <input type="text" id="idCard" name="idCard" maxlength="13" required
-                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     pattern="\d{13}" title="กรุณากรอกเลขบัตรประชาชน 13 หลัก">
             </div>
 
             <div>
-                <label for="phone" class="block text-gray-700 font-semibold">เบอร์โทรศัพท์:</label>
+                <label for="phone" class="block text-gray-700 font-semibold">📞 เบอร์โทรศัพท์:</label>
                 <div class="flex">
                     <input type="tel" id="phone" name="phone" required
-                        class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-primary">
                     <button type="button" id="getPhoneBtn"
-                        class="mt-1 px-4 py-3 bg-blue-500 text-white font-bold rounded-r-lg hover:bg-blue-600 transition-all">
-                        ดึงเบอร์
+                        class="mt-1 px-4 py-3 bg-secondary text-white font-bold rounded-r-lg hover:bg-green-600 transition-all">
+                        📲 ดึงเบอร์
                     </button>
                 </div>
             </div>
 
             <div>
-                <label for="date" class="block text-gray-700 font-semibold">วันที่นัดหมาย:</label>
+                <label for="date" class="block text-gray-700 font-semibold">📅 วันที่นัดหมาย:</label>
                 <input type="date" id="date" name="date" required
-                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
 
             <div>
-                <label for="time" class="block text-gray-700 font-semibold">เวลานัดหมาย:</label>
+                <label for="time" class="block text-gray-700 font-semibold">⏰ เวลานัดหมาย:</label>
                 <input type="time" id="time" name="time" required
-                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
 
             <div>
-                <label for="reason" class="block text-gray-700 font-semibold">เหตุผล / อาการ:</label>
+                <label for="reason" class="block text-gray-700 font-semibold">🩺 เหตุผล / อาการ:</label>
                 <input type="text" id="reason" name="reason" required
-                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
             </div>
 
             <button type="submit"
-                class="w-full bg-blue-500 text-white font-bold py-3 rounded-lg hover:bg-blue-600 transition-all">
-                ส่งข้อมูลนัดหมาย
+                class="w-full bg-primary text-white font-bold py-3 rounded-lg hover:bg-indigo-600 transition-all">
+                ✅ ส่งข้อมูลนัดหมาย
             </button>
         </form>
     </div>
@@ -91,13 +104,14 @@
         $('#getPhoneBtn').click(getPhoneNumber);
 
         function showAlert(type, message) {
-            const title = type === 'success' ? 'สำเร็จ!' : 'ผิดพลาด!';
+            const title = type === 'success' ? '✅ สำเร็จ!' : '❌ ผิดพลาด!';
             const icon = type === 'success' ? 'success' : 'error';
             Swal.fire({
                 title: title,
                 text: message,
                 icon: icon,
-                confirmButtonText: 'ตกลง'
+                confirmButtonText: 'ตกลง',
+                confirmButtonColor: '#4F46E5'
             });
         }
 
@@ -106,7 +120,7 @@
             const formData = new FormData(this);
             const appointmentData = Object.fromEntries(formData.entries());
 
-            fetch('https://script.google.com/macros/s/AKfycbzmCjMgNNK8XLMfDxqUjG1uHwmRw9TnEyOEbWTaI2rmz030QGaaBVxcEnQJeH_WTeqv/exec', {
+            fetch('https://script.google.com/macros/s/AKfycbw8LA8g166b_G0qou3mAqO2iT0qcuTANPPGNrzCojH6k4cD9g0g6VLsYTen9zDrmK7-/exec', {
                 method: 'POST',
                 mode: 'no-cors',
                 body: JSON.stringify({
@@ -119,9 +133,7 @@
             })
                 .then(response => {
                     if (response.type === 'opaque') {
-                        // เนื่องจาก no-cors mode ทำให้เราไม่สามารถอ่านการตอบกลับได้
-                        // เราจะถือว่าการส่งข้อมูลสำเร็จ
-                        showAlert('success', 'ข้อมูลถูกส่งเรียบร้อยแล้ว');
+                        showAlert('success', '🎉 ข้อมูลถูกส่งเรียบร้อยแล้ว');
                         $('#appointmentForm')[0].reset();
                     } else {
                         throw new Error('Network response was not ok.');
@@ -129,7 +141,7 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    showAlert('error', 'เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
+                    showAlert('error', '😓 เกิดข้อผิดพลาดในการส่งข้อมูล กรุณาลองใหม่อีกครั้ง');
                 });
         });
     </script>
