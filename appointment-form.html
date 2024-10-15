@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>แบบฟอร์มนัดหมายผู้ป่วย</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen w-full flex items-center justify-center overflow-auto">
+
+    <div class="w-full max-w-md bg-white p-6 sm:p-8 rounded-lg shadow-lg mx-auto">
+
+        <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">
+            แบบฟอร์มนัดหมายผู้ป่วย
+        </h2>
+
+        <form id="appointmentForm" class="space-y-6">
+            <div>
+                <label for="name" class="block text-gray-700 font-semibold">ชื่อ-นามสกุล:</label>
+                <input type="text" id="name" name="name" required
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+
+            <div>
+                <label for="idCard" class="block text-gray-700 font-semibold">เลขบัตรประชาชน:</label>
+                <input type="text" id="idCard" name="idCard" maxlength="13" required
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    pattern="\d{13}" title="กรุณากรอกเลขบัตรประชาชน 13 หลัก">
+            </div>
+
+            <div>
+                <label for="phone" class="block text-gray-700 font-semibold">เบอร์โทรศัพท์:</label>
+                <div class="flex">
+                    <input type="tel" id="phone" name="phone" required
+                        class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+                    <button type="button" id="getPhoneBtn"
+                        class="mt-1 px-4 py-3 bg-blue-500 text-white font-bold rounded-r-lg hover:bg-blue-600 transition-all">
+                        ดึงเบอร์
+                    </button>
+                </div>
+            </div>
+
+            <div>
+                <label for="date" class="block text-gray-700 font-semibold">วันที่นัดหมาย:</label>
+                <input type="date" id="date" name="date" required
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+
+            <div>
+                <label for="time" class="block text-gray-700 font-semibold">เวลานัดหมาย:</label>
+                <input type="time" id="time" name="time" required
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+
+            <div>
+                <label for="reason" class="block text-gray-700 font-semibold">เหตุผล / อาการ:</label>
+                <input type="text" id="reason" name="reason" required
+                    class="w-full mt-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+            </div>
+
+            <button type="submit"
+                class="w-full bg-blue-500 text-white font-bold py-3 rounded-lg hover:bg-blue-600 transition-all">
+                ส่งข้อมูลนัดหมาย
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function getPhoneNumber() {
+            if ('contacts' in navigator && 'select' in navigator.contacts) {
+                navigator.contacts.select(['tel'], { multiple: false })
+                    .then(function (contacts) {
+                        if (contacts.length > 0 && contacts[0].tel.length > 0) {
+                            $('#phone').val(contacts[0].tel[0]);
+                        } else {
+                            showAlert('error', 'ไม่พบเบอร์โทรศัพท์');
+                        }
+                    })
+                    .catch(function (err) {
+                        console.error('Error: ', err);
+                        showAlert('error', 'เกิดข้อผิดพลาดในการดึงเบอร์โทรศัพท์');
+                    });
+            } else {
+                showAlert('error', 'อุปกรณ์ของคุณไม่รองรับการดึงเบอร์โทรศัพท์อัตโนมัติ');
+            }
+        }
+
+        $('#getPhoneBtn').click(getPhoneNumber);
+
+        function showAlert(type, message) {
+            const title = type === 'success' ? 'สำเร็จ!' : 'ผิดพลาด!';
+            const icon = type === 'success' ? 'success' : 'error';
+            Swal.fire({
+                title: title,
+                text: message,
+                icon: icon,
+                confirmButtonText: 'ตกลง'
+            });
+        }
+
+        $('#appointmentForm').submit(function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const appointmentData = Object.fromEntries(formData.entries());
+
+            // ในที่นี้เราจะแสดงข้อมูลที่ส่งมาแทนการส่งไปยัง Google Apps Script
+            console.log('Appointment Data:', appointmentData);
+            showAlert('success', 'ข้อมูลถูกส่งเรียบร้อยแล้ว (ทดสอบ)');
+            $('#appointmentForm')[0].reset();
+        });
+    </script>
+</body>
+
+</html>
